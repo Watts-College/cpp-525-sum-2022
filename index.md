@@ -13,14 +13,14 @@ info:
  course_title: Foundations of Program Evaluation Part III
  course_number: CPP 525 
  course_level: Graduate 
- course_website: 'https://canvas.asu.edu/courses/70102'
+ course_website: 'https://canvas.asu.edu/courses/100993'
  course_start_end_dates: June 30th to August 10th, 2021 
  course_prerequisites: CPP 523 and CPP 526
  class_meets_when:  Asynchronous  
  class_meets_where:  ''
  review_sessions_when: Thursdays at 7pm 
  review_sessions_where: 'https://asu.zoom.us/j/6829300585'
- discussion_board_url: 'https://watts-college.github.io/cpp-525-template/help/'
+ discussion_board_url: 'https://watts-college.github.io/cpp-525-fall-2021/help/'
 
 instructor:
 -  name: David Selby, PhD
