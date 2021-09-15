@@ -1,0 +1,377 @@
+---
+title: "Instrumental Variables Example"
+output:
+  html_document2:
+    theme: readable
+    df_print: paged
+    highlight: tango
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, fig.width=10 )
+```
+
+
+
+
+```{r}
+## Load stargazer package for nice tables
+library( stargazer )
+library( dplyr )
+library( pander )
+```
+
+<br>
+<br>
+
+
+## Data
+
+* **X1** is the policy variable
+* **X2** is a control variable
+* **X3** is the omitted variable
+* **Z** is the instrumental variable
+* **Y** is the outcome
+
+```{r, echo=F}
+
+set.seed( 123 )
+
+# Variable definitions for model  y ~ x1 + x2 + x3
+
+x2 <- rnorm(1000, 50000, 10000)
+
+x3 <- rnorm(1000, 35000, 10000) #Omitted variable
+
+z <- rnorm(1000, 15000, 20000)
+
+x1 <- 2*z - 7*x3 + 100*rnorm(1000) # the policy variable
+
+y <- 25 + 23*x2 - 2*x1 + 14*x3 + 100*rnorm(1000)
+
+dat <- data.frame( y, x1, x2, x3, z )
+
+# write.csv( dat, "iv-reg-example.csv", row.names=F )
+# head( dat ) %>% pander()
+```
+
+
+
+```{r}
+URL <- "https://ds4ps.org/cpp-525-spr-2020/lectures/data/iv-reg-example.csv"
+dat <- read.csv( URL, stringsAsFactors=F )
+```
+
+<br>
+<br>
+
+```{r, echo=F, fig.height=10, eval=F}
+
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits=digits)[1]
+    txt <- paste(prefix, txt, sep="")
+    if(missing(cex.cor)) cex <- 0.8/strwidth(txt)
+    
+    test <- cor.test(x,y)
+    # borrowed from printCoefmat
+    Signif <- symnum(test$p.value, corr = FALSE, na = FALSE,
+                  cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                  symbols = c("***", "**", "*", ".", " "))
+    
+    text(0.5, 0.5, txt, cex = 1.5 )
+    text(.7, .8, Signif, cex=cex, col=2)
+}
+
+panel.smooth <- function (x, y, col = par("col"), bg = NA, pch = par("pch"), 
+	cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...) 
+{
+	points(x, y, pch = 19, col = gray(0.7,0.3), bg = bg, cex = cex)
+	ok <- is.finite(x) & is.finite(y)
+	if (any(ok)) 
+		lines(stats::lowess(x[ok], y[ok], f = span, iter = iter), 
+			col = col.smooth, lwd=2, ...)
+}
+
+pairs( dat, upper.panel=panel.cor, lower.panel=panel.smooth )
+
+
+```
+
+
+```{r, echo=F, fig.height=10}
+# helper functions for pairs
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor )
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    # r <- abs(cor(x, y))
+    r <- round( cor(x, y), 2 )
+    txt <- paste( prefix, r, sep="" )
+    # txt <- format(c(r, 0.123456789), digits=digits)[1]
+    # txt <- paste( prefix, txt, sep="" )
+    if(missing(cex.cor)) cex <- 4 # 0.5/strwidth(txt)
+    
+    test <- cor.test(x,y)
+    # borrowed from printCoefmat
+    Signif <- symnum(test$p.value, corr = FALSE, na = FALSE,
+                  cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                  symbols = c("***", "**", "*", ".", " "))
+    
+    text( 0.5, 0.5, txt, cex = 0.6*cex )
+    text( 0.7, 0.8, Signif, cex=cex, col=2 )
+}
+
+panel.smooth <- function( x, y, col=gray(0.7,0.4), bg=NA, pch=16, 
+                         cex=2, col.smooth="red", span=2/3, iter=3, ...) 
+{
+    points(x, y, pch = pch, col = col, bg = bg, cex = cex)
+    ok <- is.finite(x) & is.finite(y)
+    if (any(ok)) 
+        lines( stats::lowess(x[ok], y[ok], f = span, iter = iter), 
+            col = col.smooth, lwd=2, ...)
+}
+
+panel.cor2 <- function(x, y, digits=2, prefix="" )
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- round( abs( cor(x, y)), 2 )
+    txt <- paste( prefix, r, sep="" )
+    text( 0.5, 0.5, txt, cex = 2 )
+
+}
+
+pairs( dat, upper.panel=panel.cor, lower.panel=panel.smooth )
+
+
+```
+
+<br>
+<br>
+
+Does the variable Z meet the criteria as an instrument if X1 is the policy variable and X3 is the omitted variable? How do you know?
+
+Answer: 
+
+* Z is highly correlated with X1
+* Z is uncorrelated with X3
+* Z is only correlated with Y through X1 (this you argue by theory)
+
+<br>
+<br>
+
+
+```{r, echo=F, results='asis', eval=F}
+
+stargazer( dat, type="html", digits=0 )
+
+```
+
+
+
+
+
+
+
+
+
+# Size of Bias
+
+<br>
+<br>
+
+
+```{r, results='asis'}
+
+# Full Model - Correct Slopes
+
+full.model <- lm( y ~ x1 + x2 + x3 )
+
+# Naive Model (biased slopes)
+
+naive.model <- lm( y ~ x1 + x2 )
+
+stargazer( full.model, naive.model,
+           column.labels = c("Full Model","Naive Model"),
+           omit.stat = c("rsq","ser"), 
+           type="html", digits=2 )
+
+```
+
+<br>
+<br>
+
+Our estimate of policy impact is very different in our "naive model" versus the full, unbiased model. The omitted variable X3 is causing problems.
+
+<br>
+<br>
+
+# Instrumental Variable Model
+
+When we have an instrumental variable, we estimate our policy impact using a "Two-Stage Least Squares" approach. In the first stage, we "clean" our policy variable from the influence of the omitted variable X3. In the second stage, we use the clearn version of X1 (X1-hat) to make a better (less biased) estimate of program impact.
+
+```{r, results='asis'}
+
+first.stage <- lm( x1 ~ z + x2 )
+
+x1_hat <- fitted( first.stage )
+
+second.stage <- lm( y ~ x1_hat + x2 )
+
+
+stargazer( full.model, naive.model, second.stage,
+           column.labels = c("Full Model","Naive Model","IV Model"),
+           type="html", 
+           omit.stat = c("rsq","ser"), 
+           digits=2 )
+
+```
+
+<br>
+<br>
+
+Note that the instrumental variable model has almost completely recovered the true slope.
+
+<br>
+<br>
+
+# Model Fit
+
+```{r, echo=F}
+
+
+cplot <- function( x1, x2, ... )
+{
+
+	plot( x1, x2,
+	      pch=19, 
+	      col=gray(0.6, alpha = 0.2), 
+	      cex=2,  
+	      bty = "n",
+        cex.lab=1.5,
+	      ... )
+
+	lines( lowess(x2~x1), col="red", lwd=3 )
+
+}
+
+
+```
+
+
+<br>
+
+
+We know that omitted variable bias results from the correlation of our policy variable (X1) and the omitted variable (X3).
+
+<br>
+
+
+```{r}
+
+
+cplot( x1, x3, xlab="X1", ylab="X3" )
+
+```
+
+<br>
+
+We can use the instrumental variable to partition the variance of X1 into a component that is highly correlated with X3 (the residual), and a component that is uncorrelated with X3 (X1-hat). If we want to be free of omitted variable bias caused by X3 we can use the uncorrelated component of X1 only (X1-hat).
+
+<br>
+
+```{r}
+
+first.stage <- lm( x1 ~ z + x2 )
+
+x1_hat <- fitted( first.stage )
+e_x1 <- residuals( first.stage )
+
+
+par( mfrow=c(1,2) )
+
+cplot( e_x1, x3, xlab="X1 Residual", ylab="X3" )
+cplot( x1_hat, x3, xlab="X1-Hat", ylab="X3" )
+
+
+```
+
+<br>
+
+One interesting thing about the instrumental variable model is that X1 will be more correlated with Y than X1-hat, but X1-hat does a better job of recovering the true slope B1 from the full model.
+
+<br>
+
+```{r}
+
+par( mfrow=c(1,2) )
+
+cplot( x1, y, xlab="X1", ylab="Y" )
+cplot( x1_hat, y, xlab="X1-Hat", ylab="Y" )
+
+
+```
+
+<br>
+<br>
+
+```{r, results='asis', echo=F}
+
+
+stargazer( full.model, naive.model, second.stage,
+           column.labels = c("Full Model","Naive Model","IV Model"),
+           type="html", 
+           omit.stat = c("rsq","ser"), 
+           digits=2 )
+
+```
+
+
+<br>
+<br>
+
+The effectiveness of the instrument is largely determined by the strength of the correlation between the instrumental variable Z and the policy variable X1, as well as the total correlation of the instrumental variable with Y.
+
+<br>
+<br>
+
+```{r}
+
+par( mfrow=c(1,2) )
+
+cplot( z, x1, xlab="Z", ylab="X1" )
+cplot( z, y, xlab="Z", ylab="Y" )
+
+
+```
+
+<br>
+<br>
+
+
+# Weak Instruments Problem
+
+
+```{r, results='asis'}
+
+first.stage <- lm( x1 ~ z + x2 )
+
+stargazer( first.stage,
+           column.labels = c("First Stage"),
+           type="html", 
+           omit.stat = c("rsq","ser"), 
+           digits=2 )
+
+```
+
+<br>
+<br>
+
+The rule of thumb is that the first stage should have an F Statistic of at least 10 in the first stage model to avoid the weak instrument problem.
+
