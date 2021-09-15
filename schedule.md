@@ -6,13 +6,13 @@ canvas:
   assignment_url: 'https://canvas.asu.edu/courses/100993/assignments'
   
 labs:
-  lab-01:  'Monday, July 5th' 
-  lab-02:  'Monday, July 12th'
-  lab-03:  'Monday, July 19th'
-  lab-04:  'Monday, July 26th'
-  lab-05:  'Monday, August 2nd'
-  lab-06:  'Monday, August 9th'
-  lab-07:  'Monday, August 9th'
+  lab-01:  'Sunday, October 17th' 
+  lab-02:  'Sunday, October 24th'
+  lab-03:  'Sunday, October 31st'
+  lab-04:  'Sunday, November 7th'
+  lab-05:  'Sunday, November 21st'
+  lab-06:  'Sunday, November 28th'
+  lab-07:  'Sunday, December 3rd'
   
 ---
 
