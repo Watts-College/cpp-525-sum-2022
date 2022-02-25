@@ -3,16 +3,15 @@ layout: default
 title: Schedule
 
 canvas: 
-  assignment_url: 'https://canvas.asu.edu/courses/100993/assignments'
+  assignment_url: 'https://canvas.asu.edu/courses/115725/assignments'
   
 labs:
-  lab-01:  'Sunday, October 17th' 
-  lab-02:  'Sunday, October 24th'
-  lab-03:  'Sunday, October 31st'
-  lab-04:  'Sunday, November 7th'
-  lab-05:  'Sunday, November 21st'
-  lab-06:  'Sunday, November 28th'
-  lab-07:  'Sunday, December 3rd'
+  lab-01:  'Sunday, March 20th' 
+  lab-02:  'Sunday, March 27th'
+  lab-03:  'Sunday, April 3rd'
+  lab-04:  'Sunday, April 10th'
+  lab-05:  'Sunday, April 24th'
+  lab-06:  'Tuesday, May 3rd'
   
 ---
 
