@@ -8,13 +8,13 @@
 github_info:
     username:          watts-college 
     branch:            master
-    website-repo:      cpp-525-fall-2021
-    course-repo:       cpp-525-fall-2021
+    website-repo:      cpp-525-spr-2022
+    course-repo:       cpp-525-spr-2022
 
 # Site subpath, e.g. /blog
 url :               "https://watts-college.github.io"
-baseurl:            "/cpp-525-fall-2021"
-course_url:         "https://watts-college.github.io/cpp-525-fall-2021/"
+baseurl:            "/cpp-525-spr-2022"
+course_url:         "https://watts-college.github.io/cpp-525-spr-2022/"
 
 
 # NAVIGATION BAR
@@ -53,8 +53,8 @@ permalink:          /:title/
 
 # Default author settings
 author:
-    name:       Jesse Lecy
-    github:     lecy   # Github username for avatar
+    name:       David Selby
+    github:     Dselby86   # Github username for avatar
 
 # Social icons displayed in footer
 social:
