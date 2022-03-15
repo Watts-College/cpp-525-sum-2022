@@ -18,7 +18,7 @@ info:
  course_prerequisites: CPP 523 and CPP 526
  class_meets_when:  Asynchronous  
  class_meets_where:  ''
- review_sessions_when: Thursdays at 7pm 
+ review_sessions_when: Thursdays at 7:30pm 
  review_sessions_where: 'https://asu.zoom.us/j/6829300585'
  discussion_board_url: 'https://watts-college.github.io/cpp-525-spr-2022/help/'
 
