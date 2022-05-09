@@ -3,7 +3,7 @@ layout: default
 title: Schedule
 
 canvas: 
-  assignment_url: 'https://canvas.asu.edu/courses/115725/assignments'
+  assignment_url: 'https://canvas.asu.edu/courses/119377/assignments'
   
 labs:
   lab-01:  'Sunday, March 20th' 
