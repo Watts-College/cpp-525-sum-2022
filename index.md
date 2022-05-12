@@ -14,13 +14,13 @@ info:
  course_number: CPP 525 
  course_level: Graduate 
  course_website: 'https://canvas.asu.edu/courses/115725'
- course_start_end_dates: March 13th to May 3rd, 2022 
+ course_start_end_dates: May 16th to June 26th, 2022 
  course_prerequisites: CPP 523 and CPP 526
  class_meets_when:  Asynchronous  
  class_meets_where:  ''
- review_sessions_when: Thursdays at 7:30pm 
+ review_sessions_when: Wednesdays at 7:30pm 
  review_sessions_where: 'https://asu.zoom.us/j/6829300585'
- discussion_board_url: 'https://watts-college.github.io/cpp-525-spr-2022/help/'
+ discussion_board_url: 'https://watts-college.github.io/cpp-525-sum-2022/help/'
 
 instructor:
 -  name: David Selby, PhD
@@ -180,7 +180,7 @@ Letter grades comport with a traditional set of intervals:
 
 The assigned work for the term comes in the form of four elements, described below:
 
-- **Weekly Labs (100%):**  Each week you will be given lecture notes and a lab covering a new regression model. The labs require a substantial amount of work preparing the raw data for analysis, running models, and interpretting results. Your grade is derived from performance on these six labs. You are allowed one round of corrections for each lab, due at the same time as the lab for the next week.
+- **Weekly Labs (100%):**  Each week you will be given lecture notes and a lab covering a new regression model. The labs require a substantial amount of work preparing the raw data for analysis, running models, and interpretting results. Your grade is derived from performance on these six labs. 
 
 
 ## D. General Grading Rubric for Written Work
