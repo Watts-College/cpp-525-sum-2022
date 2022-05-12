@@ -6,13 +6,12 @@ canvas:
   assignment_url: 'https://canvas.asu.edu/courses/119377/assignments'
   
 labs:
-  lab-01:  'Sunday, May 15th' 
-  lab-02:  'Sunday, May 22nd'
-  lab-03:  'Sunday, May 29th'
-  lab-04:  'Sunday, June 5th'
-  lab-05:  'Sunday, June 12th'
-  lab-06:  'Tuesday, June 19th'
-  
+  lab-01:  'Sunday, May 22nd'
+  lab-02:  'Sunday, May 29th'
+  lab-03:  'Sunday, June 5th'
+  lab-04:  'Sunday, June 12th'
+  lab-05:  'Sunday, June 19th'
+  lab-06:  'Tuesday, June 28th' 
 ---
 
 
